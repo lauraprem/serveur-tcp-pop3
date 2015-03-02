@@ -10,7 +10,7 @@ package serverPop3;
  *
  * @author Corinne & Laura
  */
-public class MainServeurWEB {
+public class MainServerWEB {
 
     /**
      * @param args the command line arguments
