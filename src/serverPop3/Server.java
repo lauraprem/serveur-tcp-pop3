@@ -16,8 +16,7 @@ public class Server extends Thread {
     
     // CONSTRUCTEUR
     public Server() {
-        portServeur = 8080;
-        
+        portServeur = 110;
         initSocketServeur();
     }
 
@@ -35,19 +34,19 @@ public class Server extends Thread {
         while (true) {
             try {
                 Socket connexion;
+                
                 // Attente de demande de connexion
                 connexion = socketServeur.accept();
 
                 // Création d'une communication
                 Communication com = new Communication(connexion);
-                // activation de la communication
+                
+                // Activation de la communication
                 com.start();
 
             } catch (IOException ex) {
                 System.out.println("Problème de connection : " + ex.getMessage());
             }
         }
-
     }
-
 }
