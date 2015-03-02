@@ -6,7 +6,7 @@ import java.net.Socket;
 
 /**
  *
- * @author Corinne
+ * @author Corinne & Laura
  */
 public class Server extends Thread {
 

@@ -16,7 +16,7 @@ import java.net.SocketTimeoutException;
 
 /**
  *
- * @author Corinne
+ * @author Corinne & Laura
  */
 public class Communication extends Thread {
 
