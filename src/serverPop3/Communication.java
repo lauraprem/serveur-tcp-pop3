@@ -29,9 +29,7 @@ public class Communication extends Thread {
     private BufferedOutputStream outDonnees;
 
     private static final int uneMinute = 60000; // Verif + ou = 10 mins
-    // Root est le chemin courrent
-//    private static final File SERVEUR_ROOT = new File("./src/serveurweb/Serveur/Contenue/");
-//    private static final String FICHIER_DEFAUT = "fichierRacine.html";
+//    private static final File SERVEUR_Mail = new File("./StockMail/");
 
     // demande client
 //    private String commande;
@@ -71,7 +69,8 @@ public class Communication extends Thread {
             
             //recupere la premiere ligne de la requete du client
             String ligne = in.readLine();
-            System.out.println(ligne); // A traiter
+            System.out.println(ligne);
+            //TODO ligne
             
         } catch (SocketTimeoutException e) {
             System.out.println("time_out dépassé : " + e.getMessage());
