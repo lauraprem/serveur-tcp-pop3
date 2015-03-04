@@ -6,6 +6,8 @@
 
 package serverPop3;
 
+import serverPop3.requete.ActionAPOP;
+
 /**
  *
  * @author Corinne & Laura
