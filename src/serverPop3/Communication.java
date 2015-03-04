@@ -70,7 +70,7 @@ public class Communication extends Thread {
             //recupere la premiere ligne de la requete du client
             String ligne = in.readLine();
             System.out.println(ligne);
-            //TODO ligne
+            processing(ligne);
             
         } catch (SocketTimeoutException e) {
             System.out.println("time_out dépassé : " + e.getMessage());
@@ -87,7 +87,19 @@ public class Communication extends Thread {
         }
         System.out.println("Disconnected : " + socket.toString());
     }
-
+    
+    /**
+     * Traite la demande du client :
+     * Découpe chaine => recup commande ou mettre erreur
+     * Verif commande existe
+     * Verif si commande peut être faite (par rapport à l'état)
+     * Exécute la commande
+     *
+     * @param msg du client
+     */
+    public void processing(String msg) {
+    	//split
+    }
 
     /**
      * Ferme les flux.
