@@ -9,14 +9,14 @@ public abstract class ActionType {
 
 	protected static final String MAIL_PATH = "./StockMail/";
 	
-	public String reponseOk(String message){
+	public String reponseOk(){
 		//TODO construire réponse ok
-		return "+OK " + message;
+		return "+OK ";
 	}
 	
-	public String reponseKo(String message){
+	public String reponseKo(){
 		//TODO construire réponse ko
-		return "-KO " + message;
+		return "-KO ";
 	}
 
 }
