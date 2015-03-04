@@ -14,7 +14,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
-import serverPop3.requete.ActionType;
+import serverPop3.requete.*;
 
 /**
  *
