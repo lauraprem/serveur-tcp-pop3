@@ -6,6 +6,8 @@ package serverPop3.requete;
  *
  */
 public abstract class ActionType {
+
+	protected static final String MAIL_PATH = "./StockMail/";
 	
 	public String reponseOk(String message){
 		//TODO construire réponse ok
