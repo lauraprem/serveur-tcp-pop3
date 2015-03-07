@@ -56,7 +56,6 @@ public class Communication extends Thread {
 
 		// Autre
 		finRequete = "<CR><LF>";
-		// etatCourant = Etat.FERME;
 		etatCourant = Etat.AUTORISATION;
 	}
 
@@ -80,6 +79,7 @@ public class Communication extends Thread {
 			// Permet de savoir si la connexion est à clôturé
 			boolean isQuit = false;
 			while(isQuit == false){
+				
 				// recupere la premiere ligne de la requete du client
 				String ligne = in.readLine();
 				System.out.println("Request receive :" + ligne);
@@ -125,15 +125,12 @@ public class Communication extends Thread {
 			System.out.println("Params receive : " + params);
 
 			switch (etatCourant) {
-			case FERME:
-				// System.out.println("Invalid request : wait serveur response !");
-				break;
-
 			case AUTORISATION:
 				switch (command) {
 				case "APOP":
 					// TODO classe ActionAPOP
 					System.out.println("processing : APOP ...");
+					etatCourant = Etat.TRANSACTION;
 					break;
 				case "QUIT":
 					System.out.println("processing : QUIT ...");
