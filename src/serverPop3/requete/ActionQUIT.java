@@ -6,7 +6,7 @@ package serverPop3.requete;
 public class ActionQUIT extends ActionType {
 	
 	public String ProcessingQUIT() {
-		// TODO Libération du verrou (close stream fichier)
+		// TODO Libération du verrou
 		
 		return super.reponseOk("POP3 server signing off");
 		
