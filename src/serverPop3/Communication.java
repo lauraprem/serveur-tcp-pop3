@@ -77,7 +77,7 @@ public class Communication extends Thread {
 			outDonnees.flush();
 			System.out.println(msg);
 			
-			// Permet de savoir si la connexion clôturé
+			// Permet de savoir si la connexion est à clôturé
 			boolean isQuit = false;
 			while(isQuit == false){
 				// recupere la premiere ligne de la requete du client
@@ -110,7 +110,7 @@ public class Communication extends Thread {
 	public boolean processingRequest(String requete) {
 		String[] requeteCut = requete.split(finRequete);
 		
-		// Permet de savoir si la connexion clôturé
+		// Permet de savoir si la connexion est à clôturé
 		boolean isQuit = false;
 
 		// Vérification de la forme de la requête
