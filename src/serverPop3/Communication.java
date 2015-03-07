@@ -76,11 +76,14 @@ public class Communication extends Thread {
 			outDonnees.write(msg.getBytes(), 0, (int) msg.getBytes().length);
 			outDonnees.flush();
 			System.out.println(msg);
-
-			// recupere la premiere ligne de la requete du client
-			String ligne = in.readLine();
-			System.out.println("Request receive :" + ligne);
-			processingRequest(ligne);
+			
+			boolean isQuit = false;
+			while(isQuit == false){
+				// recupere la premiere ligne de la requete du client
+				String ligne = in.readLine();
+				System.out.println("Request receive :" + ligne);
+				isQuit = processingRequest(ligne);
+			}
 
 		} catch (SocketTimeoutException e) {
 			System.out.println("time_out dépassé : " + e.getMessage());
@@ -103,8 +106,9 @@ public class Communication extends Thread {
 	 * 
 	 * @param requete du client
 	 */
-	public void processingRequest(String requete) {
+	public boolean processingRequest(String requete) {
 		String[] requeteCut = requete.split(finRequete);
+		boolean isQuit = false;
 
 		// Vérification de la forme de la requête
 		if (requete.contains(finRequete) && requeteCut.length == 1
@@ -129,8 +133,9 @@ public class Communication extends Thread {
 					System.out.println("processing : APOP ...");
 					break;
 				case "QUIT":
-					// TODO classe ActionQUIT
 					System.out.println("processing : QUIT ...");
+					ActionQUIT actionQuit = new ActionQUIT();
+					isQuit = actionQuit.ProcessingQUIT(outDonnees);
 					break;
 				default:
 					System.out.println("Unidentified command : " + command);
@@ -141,13 +146,14 @@ public class Communication extends Thread {
 			case TRANSACTION:
 				switch (command) {
 				case "RETR":
-					// TODO classe ActionRETR
 					System.out.println("processing : RETR ...");
-					//retr = newActionRETR(params);
+					ActionRETR actionRetr = new ActionRETR(params);
+					isQuit = actionRetr.ProcessingRETR(outDonnees);
 					break;
 				case "QUIT":
 					// TODO classe ActionQUIT
 					System.out.println("processing : QUIT ...");
+					//quit = processingQUIT return true
 					break;
 				default:
 					System.out.println("Unidentified command : " + command);
@@ -163,6 +169,8 @@ public class Communication extends Thread {
 		} else {
 			System.out.println("Invalid request form");
 		}
+		
+		return isQuit;
 	}
 
 	/**

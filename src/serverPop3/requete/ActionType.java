@@ -1,5 +1,8 @@
 package serverPop3.requete;
 
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+
 /**
  * Actions types réalisées par le serveur, classe mère des réactions au différentes requetes 
  * @author Corinne & Laura
@@ -18,5 +21,19 @@ public abstract class ActionType {
 		//TODO construire réponse ko
 		return "-KO "+msg;
 	}
+	
+	protected boolean sendMsg(String msg, BufferedOutputStream outDonnees){
+		
+		try {
+			outDonnees.write(msg.getBytes(), 0, (int) msg.getBytes().length);
+			outDonnees.flush();
+			return true;
+		} catch (IOException e) {
+//			e.printStackTrace();
+			System.out.println("IOException : "+e.getMessage());
+			return false;
+		}
+	}
+
 
 }

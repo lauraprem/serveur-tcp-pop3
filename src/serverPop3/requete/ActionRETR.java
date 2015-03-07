@@ -1,4 +1,7 @@
 package serverPop3.requete;
+
+import java.io.BufferedOutputStream;
+
 /**
 *
 * @author Corinne & Laura
@@ -17,7 +20,7 @@ public class ActionRETR extends ActionType {
 //		numMsg = null;
 	}
 	
-	public boolean ProcessingRETR() {
+	public boolean ProcessingRETR(BufferedOutputStream outDonnees) {
 		if(numMsg != null){
 			// TODO Récupération du message+ calcul taille en octet
 			// TODO envoie message : +OK {nb octets}
