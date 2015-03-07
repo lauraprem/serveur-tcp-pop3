@@ -10,7 +10,6 @@ public class ActionQUIT extends ActionType {
 	
 	public ActionQUIT() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	public boolean ProcessingQUIT(BufferedOutputStream outDonnees) {
@@ -18,9 +17,10 @@ public class ActionQUIT extends ActionType {
 		
 		// Envoi du message au client
 		String msg = super.reponseOk("POP3 server signing off");
-		sendMsg(msg, outDonnees);
+		if(sendMsg(msg, outDonnees)){
+			return true;
+		}
 		
-		// Demande de clôture de connexion après son appel
-		return true;
+		return false;
 	}
 }

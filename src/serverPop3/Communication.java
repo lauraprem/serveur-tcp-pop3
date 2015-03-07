@@ -77,6 +77,7 @@ public class Communication extends Thread {
 			outDonnees.flush();
 			System.out.println(msg);
 			
+			// Permet de savoir si la connexion clôturé
 			boolean isQuit = false;
 			while(isQuit == false){
 				// recupere la premiere ligne de la requete du client
@@ -108,6 +109,8 @@ public class Communication extends Thread {
 	 */
 	public boolean processingRequest(String requete) {
 		String[] requeteCut = requete.split(finRequete);
+		
+		// Permet de savoir si la connexion clôturé
 		boolean isQuit = false;
 
 		// Vérification de la forme de la requête
@@ -148,12 +151,12 @@ public class Communication extends Thread {
 				case "RETR":
 					System.out.println("processing : RETR ...");
 					ActionRETR actionRetr = new ActionRETR(params);
-					isQuit = actionRetr.ProcessingRETR(outDonnees);
+					isQuit = !actionRetr.ProcessingRETR(outDonnees);
 					break;
 				case "QUIT":
-					// TODO classe ActionQUIT
 					System.out.println("processing : QUIT ...");
-					//quit = processingQUIT return true
+					ActionQUIT actionQuit = new ActionQUIT();
+					isQuit = actionQuit.ProcessingQUIT(outDonnees);
 					break;
 				default:
 					System.out.println("Unidentified command : " + command);
