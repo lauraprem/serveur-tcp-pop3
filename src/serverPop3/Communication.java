@@ -13,6 +13,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
+import serverPop3.FileMail.FileMails;
 import serverPop3.requete.*;
 
 /**
@@ -28,6 +29,7 @@ public class Communication extends Thread {
 
 	private String finRequete;
 	private Etat etatCourant;
+	private String User;
 
 	private static final int uneMinute = 60000; // Verif + ou = 10 mins
 
@@ -61,7 +63,11 @@ public class Communication extends Thread {
 
 	@Override
 	public void run() {
-
+		// Test
+		FileMails fileMails = new FileMails("Test.txt","./StockMail/");
+//		fileMails.saveMails();
+		fileMails.extractMails();
+		
 		// Console connexion TCP correct
 		System.out.println("Connected : " + socket.toString());
 
@@ -148,7 +154,7 @@ public class Communication extends Thread {
 				case "RETR":
 					System.out.println("processing : RETR ...");
 					ActionRETR actionRetr = new ActionRETR(params);
-					isQuit = !actionRetr.ProcessingRETR(outDonnees);
+					isQuit = !actionRetr.ProcessingRETR(outDonnees,User);
 					break;
 				case "QUIT":
 					System.out.println("processing : QUIT ...");

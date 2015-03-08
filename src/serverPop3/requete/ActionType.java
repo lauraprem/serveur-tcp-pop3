@@ -11,6 +11,7 @@ import java.io.IOException;
 public abstract class ActionType {
 	protected static final String EXTENSION_MAIL = ".txt";
 	protected static final String MAIL_PATH = "./StockMail/";
+	protected String user;
 	
 	protected String reponseOk(String msg){
 		//TODO construire réponse ok
@@ -34,6 +35,8 @@ public abstract class ActionType {
 			return false;
 		}
 	}
+	
+	// enlever verrou (fonction)
 
 
 }
