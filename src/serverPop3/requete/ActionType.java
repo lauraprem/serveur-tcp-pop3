@@ -26,6 +26,7 @@ public abstract class ActionType {
 	protected boolean sendMsg(String msg, BufferedOutputStream outDonnees){
 		
 		try {
+			msg+= "\r\n";
 			outDonnees.write(msg.getBytes(), 0, (int) msg.getBytes().length);
 			outDonnees.flush();
 			return true;
