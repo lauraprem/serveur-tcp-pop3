@@ -6,6 +6,7 @@ import java.io.IOException;
 import serverPop3.requete.ActionType;
 
 /**
+ * Permet de gérer le verrou sur les utilisateurs
  * 
  * @author Corinne & Laura
  *
@@ -13,6 +14,13 @@ import serverPop3.requete.ActionType;
 public class Lock {
 	private static final String LOCK = "LOCK.txt";
 
+	/**
+	 * Permet de savoir si un utilisateur est vérouillé
+	 * 
+	 * @param user
+	 *            le nom de l'utilisateur
+	 * @return true si vérouillé false si non vérouillé
+	 */
 	public static boolean isLocked(String user) {
 		File userFolder = new File(ActionType.MAIL_PATH + user.toUpperCase());
 		if (userFolder.exists() && userFolder.isDirectory()
@@ -27,6 +35,15 @@ public class Lock {
 		return false;
 	}
 
+	/**
+	 * Permet de vérouiller un utilisateur si possible
+	 * 
+	 * @param user
+	 *            le nom de l'utilisateur
+	 * @return LockStates.LOCKED si tout s'est bien passé et qu'on a vérouillé
+	 *         LockStates.ALREADY_LOCKED si l'utilisateur était déjà sous verrou
+	 *         LockStates.ERROR s'il y a eu une erreur
+	 */
 	public static LockStates lock(String user) {
 		if (isLocked(user)) {
 			return LockStates.ALREADY_LOCKED;
@@ -43,13 +60,22 @@ public class Lock {
 		return LockStates.ERROR;
 	}
 
-	public static LockStates unlock(String user)
-	{
-		if(!isLocked(user))
-		{return LockStates.ALREADY_UNLOCKED;}
+	/**
+	 * Permet de dévérouiller un utilisateur si possible
+	 * 
+	 * @param user
+	 *            le nom de l'utilisateur
+	 * @return LockStates.UNLOCKED si tout s'est bien passé et qu'on a vérouillé
+	 *         LockStates.ALREADY_UNLOCKED si l'utilisateur était déjà sans
+	 *         verrou LockStates.ERROR s'il y a eu une erreur
+	 */
+	public static LockStates unlock(String user) {
+		if (!isLocked(user)) {
+			return LockStates.ALREADY_UNLOCKED;
+		}
 		File lock = new File(ActionType.MAIL_PATH + user.toUpperCase()
 				+ "/LOCK.txt");
-		if(lock.delete()){
+		if (lock.delete()) {
 			return LockStates.UNLOCKED;
 		}
 		return LockStates.ERROR;
