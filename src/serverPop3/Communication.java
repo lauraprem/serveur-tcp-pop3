@@ -29,7 +29,7 @@ public class Communication extends Thread {
 
 	private String finRequete;
 	private Etat etatCourant;
-	private String User;
+	private String user;
 
 	private static final int uneMinute = 60000; // Verif + ou = 10 mins
 
@@ -57,15 +57,16 @@ public class Communication extends Thread {
 		outDonnees = null;
 
 		// Autre
-		finRequete = "<CR><LF>";
+		finRequete = "\r\n";
 		etatCourant = Etat.AUTORISATION;
 	}
 
 	@Override
 	public void run() {
 		// Test
-		FileMails fileMails = new FileMails("Test.txt","./StockMail/");
-//		fileMails.saveMails();
+		user = "TEST";
+		FileMails fileMails = new FileMails(user,".txt","./StockMail/"+user+"/");
+		fileMails.saveMails();
 		fileMails.extractMails();
 		
 		// Console connexion TCP correct
@@ -141,7 +142,7 @@ public class Communication extends Thread {
 				case "QUIT":
 					System.out.println("processing : QUIT ...");
 					ActionQUIT actionQuit = new ActionQUIT();
-					isQuit = actionQuit.ProcessingQUIT(outDonnees,User);
+					isQuit = actionQuit.PrecessingDefault(outDonnees,user);
 					break;
 				default:
 					System.out.println("Unidentified command : " + command);
@@ -154,12 +155,12 @@ public class Communication extends Thread {
 				case "RETR":
 					System.out.println("processing : RETR ...");
 					ActionRETR actionRetr = new ActionRETR(params);
-					isQuit = !actionRetr.ProcessingRETR(outDonnees,User);
+					isQuit = !actionRetr.PrecessingDefault(outDonnees,user);
 					break;
 				case "QUIT":
 					System.out.println("processing : QUIT ...");
 					ActionQUIT actionQuit = new ActionQUIT();
-					isQuit = actionQuit.ProcessingQUIT(outDonnees,User);
+					isQuit = actionQuit.PrecessingDefault(outDonnees,user);
 					break;
 				default:
 					System.out.println("Unidentified command : " + command);
