@@ -1,4 +1,4 @@
-package util.FileMail;
+package util.FileMails;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,13 +8,21 @@ public class Mail implements Serializable{
 	// ATTRIBUTS
 	private int id; // nb message ==> pourra être enlevé
 	private ArrayList<String> listHeader;
-	private String interline = "<CR><LF>";
+	private String endLine = "\r\n";
 	private ArrayList<String> listLine;
-	private String endLine = ".<CR><LF>";// caractaire 10 et 13
+	private String endMsg = ".\r\n";// caractaire 10 et 13
 	// message lu verif
 	// message a supprimer
 	
 	// CONSTRUCTEURS
+	public Mail() {
+		super();
+		
+		this.id = -1;
+		this.listHeader = new ArrayList<String>();
+		this.listLine = new ArrayList<String>();
+	}
+	
 	public Mail(int id, ArrayList<String> listHeader, ArrayList<String> listLine) {
 		super();
 		
@@ -48,14 +56,14 @@ public class Mail implements Serializable{
 
 
 
-	public String getInterline() {
-		return interline;
+	public String getEndMsg() {
+		return endMsg;
 	}
 
 
 
-	public void setInterline(String interline) {
-		this.interline = interline;
+	public void setEndMsg(String endMsg) {
+		this.endMsg = endMsg;
 	}
 
 
@@ -81,23 +89,35 @@ public class Mail implements Serializable{
 	public void setEndLine(String endLine) {
 		this.endLine = endLine;
 	}
-
-
-
-	public int CalculationSizeMail(){
-		int nbOctet = 0;
+	
+	@Override
+	public String toString() {
+		String stringMail="";
 		
-		nbOctet = interline.getBytes().length;
-		nbOctet = nbOctet + endLine.getBytes().length;
+		for (int i = 0; i < listHeader.size(); i++) {
+			stringMail = stringMail + listHeader.get(i)+endLine;
+		}
+		stringMail = stringMail + endLine;
+		for (int i = 0; i < listLine.size(); i++) {
+			stringMail = stringMail + listHeader.get(i);
+		}
+		stringMail = stringMail + endMsg;
+		
+		return stringMail;
+	}
+	
+	public int CalculationSizeMail(){
+		int nbOctetEndLine = endLine.getBytes().length;
+		int nbOctet = nbOctetEndLine;
 		
 		for(int i = 0; i < listHeader.size(); i++)
 	    {
-			nbOctet = nbOctet + listHeader.get(i).length();
+			nbOctet = nbOctet + listHeader.get(i).length()+nbOctetEndLine;
 		}
-		
+		nbOctet = nbOctet + nbOctetEndLine;
 		for(int i = 0; i < listLine.size(); i++)
 	    {
-			nbOctet = nbOctet + listLine.get(i).length();
+			nbOctet = nbOctet + listLine.get(i).length()+nbOctetEndLine;
 		}
 		
 		return nbOctet;
