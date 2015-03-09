@@ -36,7 +36,9 @@ public abstract class ActionType {
 		}
 	}
 	
-	// enlever verrou (fonction)
+	protected boolean PrecessingDefault(BufferedOutputStream outDonnees,String user){
+		return true;
+	}
 
 
 }

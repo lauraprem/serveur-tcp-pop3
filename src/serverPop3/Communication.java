@@ -141,7 +141,7 @@ public class Communication extends Thread {
 				case "QUIT":
 					System.out.println("processing : QUIT ...");
 					ActionQUIT actionQuit = new ActionQUIT();
-					isQuit = actionQuit.ProcessingQUIT(outDonnees);
+					isQuit = actionQuit.ProcessingQUIT(outDonnees,User);
 					break;
 				default:
 					System.out.println("Unidentified command : " + command);
@@ -159,7 +159,7 @@ public class Communication extends Thread {
 				case "QUIT":
 					System.out.println("processing : QUIT ...");
 					ActionQUIT actionQuit = new ActionQUIT();
-					isQuit = actionQuit.ProcessingQUIT(outDonnees);
+					isQuit = actionQuit.ProcessingQUIT(outDonnees,User);
 					break;
 				default:
 					System.out.println("Unidentified command : " + command);
