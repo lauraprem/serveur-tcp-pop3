@@ -63,11 +63,6 @@ public class Communication extends Thread {
 
 	@Override
 	public void run() {
-		// Test
-		user = "TEST";
-		FileMails fileMails = new FileMails(user,".txt","./StockMail/"+user+"/");
-		fileMails.saveMails();
-		fileMails.extractMails();
 		
 		// Console connexion TCP correct
 		System.out.println("Connected : " + socket.toString());
@@ -78,7 +73,7 @@ public class Communication extends Thread {
 			outDonnees = new BufferedOutputStream(socket.getOutputStream());
 
 			// Envoi Message de bienvenue
-			String msg = "OK + Serveur POP3 ready";
+			String msg = "+OK Serveur POP3 ready"+finRequete;
 			outDonnees.write(msg.getBytes(), 0, (int) msg.getBytes().length);
 			outDonnees.flush();
 			System.out.println(msg);
@@ -135,9 +130,9 @@ public class Communication extends Thread {
 			case AUTORISATION:
 				switch (command) {
 				case "APOP":
-					// TODO classe ActionAPOP
 					System.out.println("processing : APOP ...");
-					etatCourant = Etat.TRANSACTION;
+					ActionAPOP apop = new ActionAPOP(user);
+					etatCourant = apop.Apop(outDonnees);
 					break;
 				case "QUIT":
 					System.out.println("processing : QUIT ...");
