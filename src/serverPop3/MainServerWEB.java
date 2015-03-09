@@ -7,7 +7,7 @@
 package serverPop3;
 
 import serverPop3.requete.ActionAPOP;
-import util.Lock;
+import util.Lock.Lock;
 
 /**
  *

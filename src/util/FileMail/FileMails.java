@@ -1,4 +1,4 @@
-package serverPop3.FileMail;
+package util.FileMail;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

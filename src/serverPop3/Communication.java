@@ -13,8 +13,8 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
-import serverPop3.FileMail.FileMails;
 import serverPop3.requete.*;
+import util.FileMail.FileMails;
 
 /**
  * @author Corinne & Laura

@@ -1,4 +1,4 @@
-package serverPop3.FileMail;
+package util.FileMail;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;

@@ -2,7 +2,7 @@ package serverPop3.requete;
 
 import java.io.BufferedOutputStream;
 
-import serverPop3.FileMail.FileMails;
+import util.FileMail.FileMails;
 
 /**
 *
