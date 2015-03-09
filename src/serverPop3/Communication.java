@@ -80,7 +80,7 @@ public class Communication extends Thread {
 			
 			// Permet de savoir si la connexion est à clôturé
 			boolean isQuit = false;
-			while(isQuit == false){
+			while(!isQuit){
 				
 				// recupere la premiere ligne de la requete du client
 				String ligne = in.readLine();
