@@ -6,11 +6,13 @@ import java.util.ArrayList;
 public class Mail implements Serializable{
 	
 	// ATTRIBUTS
-	private int id;
+	private int id; // nb message ==> pourra être enlevé
 	private ArrayList<String> listHeader;
 	private String interline = "<CR><LF>";
 	private ArrayList<String> listLine;
-	private String endLine = ".<CR><LF>";
+	private String endLine = ".<CR><LF>";// caractaire 10 et 13
+	// message lu verif
+	// message a supprimer
 	
 	// CONSTRUCTEURS
 	public Mail(int id, ArrayList<String> listHeader, ArrayList<String> listLine) {

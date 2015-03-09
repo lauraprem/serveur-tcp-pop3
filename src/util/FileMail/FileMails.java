@@ -16,21 +16,24 @@ public class FileMails implements Serializable {
 
 	// ATTRIBUTS
 	private String name;
+	private String extension;
 	private String location;
 	private ArrayList<Mail> listMail;
 
 	// private String DEFAULT_ENCODING = "utf-8";
 
 	// CONSTRUCTEURS
-	public FileMails(String name, String location, ArrayList<Mail> listMail) {
+	public FileMails(String name, String extension, String location, ArrayList<Mail> listMail) {
 		this.name = name;
+		this.extension = extension;
 		this.location = location;
 		this.listMail = listMail;
 	}
 
-	public FileMails(String name, String location) {
+	public FileMails(String name,String extension, String location) {
 		super();
 		this.name = name;
+		this.extension = extension;
 		this.location = location;
 		this.listMail = new ArrayList<Mail>();
 	}
@@ -110,17 +113,17 @@ public class FileMails implements Serializable {
 	}
 
 	public void saveMails() {
-		String path = location + name;
+		String path = location+name+extension;
 		File fichier = new File(path);
 		ObjectOutputStream oos;
 
 		try {
 			// première écriture lors création du fichier
-//			 oos = new ObjectOutputStream(new BufferedOutputStream(
-//			 new FileOutputStream(fichier)));
+			 oos = new ObjectOutputStream(new BufferedOutputStream(
+			 new FileOutputStream(fichier)));
 
 			// Ecrit à la suite
-			oos = new AppendObjectOutputStream(new FileOutputStream(fichier));
+//			oos = new AppendObjectOutputStream(new FileOutputStream(fichier));
 
 			// Ecrire chaque objet Mail dans le fichier
 			ArrayList<String> listHeader = new ArrayList<String>();
@@ -129,7 +132,7 @@ public class FileMails implements Serializable {
 			listHeader.add("Subject: C'est un essai<CR><LF>");
 			ArrayList<String> listLine = new ArrayList<String>();
 			listLine.add("C'est un message juste pour tester. Alors, \"Test\".<CR><LF>");
-			oos.writeObject(new Mail(1234, listHeader, listLine));
+			oos.writeObject(new Mail(1, listHeader, listLine));
 
 			// ArrayList<String> listHeader = new ArrayList<String>();
 			// listHeader.add("Message-ID: <1234@local.machine.example><CR><LF>");
@@ -158,7 +161,7 @@ public class FileMails implements Serializable {
 
 	public void CreateSaveMails() {
 
-		String path = location + name;
+		String path = location+name+extension;
 		// TODO Créer le fichier
 		File fichier = new File(path);
 		ObjectOutputStream oos;

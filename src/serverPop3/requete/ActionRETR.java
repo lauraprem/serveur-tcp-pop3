@@ -22,10 +22,10 @@ public class ActionRETR extends ActionType {
 //		numMsg = null;
 	}
 	
-	public boolean ProcessingRETR(BufferedOutputStream outDonnees,String user) {
+	public boolean PrecessingDefault(BufferedOutputStream outDonnees,String user) {
 		if(numMsg != null){
-			FileMails fileMails = new FileMails(user+EXTENSION_MAIL,MAIL_PATH);
-			fileMails.extractMails();
+//			FileMails fileMails = new FileMails(user+EXTENSION_MAIL,MAIL_PATH);
+//			fileMails.extractMails();
 			// TODO Récupération du message+ calcul taille en octet
 			// TODO envoie message : +OK {nb octets}
 			// TODO envoie message : {contenu du message}

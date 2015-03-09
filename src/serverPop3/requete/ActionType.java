@@ -11,7 +11,6 @@ import java.io.IOException;
 public abstract class ActionType {
 	public static final String EXTENSION_MAIL = ".txt";
 	public static final String MAIL_PATH = "./StockMail/";
-	protected String user;
 	
 	protected String reponseOk(String msg){
 		//TODO construire réponse ok

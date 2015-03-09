@@ -14,7 +14,7 @@ public class ActionQUIT extends ActionType {
 		super();
 	}
 	
-	public boolean ProcessingQUIT(BufferedOutputStream outDonnees,String user) {
+	public boolean PrecessingDefault(BufferedOutputStream outDonnees,String user) {
 		// TODO Libération du verrou s'il est à libérer
 		//if(Lock.unlock(user) vérif si bien libéré
 		
