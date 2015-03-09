@@ -13,7 +13,9 @@ public class ActionAPOP extends ActionType {
 	
 	public ActionAPOP(String User)
 	{
-		this.mail = new File(MAIL_PATH+User);
-		//TODO if( !file.exists())
+		this.mail = new File(MAIL_PATH+User.toUpperCase()+EXTENSION_MAIL);
 	}
+	
+	
+		
 }
