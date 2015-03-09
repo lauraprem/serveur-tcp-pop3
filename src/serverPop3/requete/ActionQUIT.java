@@ -1,15 +1,26 @@
 package serverPop3.requete;
+
+import java.io.BufferedOutputStream;
+
 /**
 *
 * @author Corinne & Laura
 */
 public class ActionQUIT extends ActionType {
 	
-	public String reponseOkQUIT() {
-		// TODO Libération du verrou (close stream fichier)
+	public ActionQUIT() {
+		super();
+	}
+	
+	public boolean ProcessingQUIT(BufferedOutputStream outDonnees) {
+		// TODO Libération du verrou s'il est à libérer
 		
-		return super.reponseOk("POP3 server signing off");
+		// Envoi du message au client
+		String msg = super.reponseOk("POP3 server signing off");
+		if(sendMsg(msg, outDonnees)){
+			return true;
+		}
 		
-		// TODO Clôture connexion après son appel
+		return false;
 	}
 }
