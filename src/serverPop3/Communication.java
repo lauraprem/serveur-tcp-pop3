@@ -14,6 +14,7 @@ import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
 import serverPop3.requete.Requete;
+import util.Lock.Lock;
 import util.MsgServer.MsgServer;
 
 /**
@@ -98,6 +99,10 @@ public class Communication extends Thread {
 			System.out.println(user+" Error : " + ex.getMessage());
 			// erreur(500);
 		} finally {
+			if(MsgServer.isUserFormat(user))//TODO && existe user
+			{
+				Lock.unlock(user);
+			}
 			close(in);
 			close(out);
 			close(outDonnees);

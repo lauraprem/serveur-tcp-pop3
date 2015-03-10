@@ -36,10 +36,21 @@ public abstract class MsgServer {
 	}
 	
 	private static String UserForm(String user){
-		if(user.split(",localport=").length == 1){
+		if(isUserFormat(user)){
 			user = "["+user+"]";
 		}
 		
 		return user;
+	}
+	
+	/**
+	 * permet de savoir si le user est désigné par son nom ou son ip et son port
+	 * @param user
+	 * @return
+	 * true si nom
+	 * false si adresse ip et port
+	 */
+	public static boolean isUserFormat(String user){
+		return user.split(",localport=").length == 1;
 	}
 }
