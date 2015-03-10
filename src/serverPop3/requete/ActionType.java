@@ -14,7 +14,6 @@ public abstract class ActionType {
 
 	private BufferedOutputStream outDonnees;
 	protected String user;
-	private String sendDeb = "["+user+"] ";
 
 	public ActionType(BufferedOutputStream outDonnees) {
 		super();
