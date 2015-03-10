@@ -99,7 +99,7 @@ public class Communication extends Thread {
 			System.out.println(user+" Error : " + ex.getMessage());
 			// erreur(500);
 		} finally {
-			if(MsgServer.isUserFormat(user))//TODO && existe user
+			if(MsgServer.isUserFormat(user) && Lock.existUser(user))
 			{
 				Lock.unlock(user);
 			}

@@ -34,6 +34,12 @@ public class Lock {
 		}
 		return false;
 	}
+	
+	public static boolean existUser(String user)
+	{
+		File userFolder = new File(Requete.MAIL_PATH + user.toUpperCase());
+		return userFolder.exists();
+	}
 
 	/**
 	 * Permet de vérouiller un utilisateur si possible

@@ -65,6 +65,7 @@ public abstract class ActionType {
 		}
 	}
 	
+	
 	protected boolean PrecessingDefault(){
 		return true;
 	}

@@ -6,6 +6,7 @@ import java.io.File;
 import serverPop3.Etat;
 import util.Lock.Lock;
 import util.Lock.LockStates;
+import util.MsgServer.MsgServer;
 
 /**
  * 
@@ -14,8 +15,8 @@ import util.Lock.LockStates;
  */
 public class ActionAPOP extends ActionType {
 
-//	private File mail;
-//	private String user;
+	// private File mail;
+	// private String user;
 
 	public ActionAPOP(BufferedOutputStream outDonnees) {
 		super(outDonnees);
@@ -24,10 +25,15 @@ public class ActionAPOP extends ActionType {
 
 	public Etat Apop(String params) {
 		// TODO authentfication + verif user cas user null
-		
+
 		this.user = retrieveUser(params);
-//		this.mail = new File(Requete.MAIL_PATH + this.user
-//				+ Requete.EXTENSION_MAIL);
+		// this.mail = new File(Requete.MAIL_PATH + this.user
+		// + Requete.EXTENSION_MAIL);
+		if(user == null)
+		{
+			super.reponseKo("no user was passed.");
+			return Etat.AUTORISATION;
+		}
 		LockStates lockState = Lock.lock(user);
 		switch (lockState) {
 		case LOCKED:
@@ -42,18 +48,16 @@ public class ActionAPOP extends ActionType {
 		}
 	}
 
-
 	public String retrieveUser(String params) {
-		if(!params.equals("")){
+		if (!params.equals("")) {
 			String[] paramList = params.split(" ");
-		
-			return paramList[1].toUpperCase();
-		}else{
-			return null;
+			if (paramList[1] != null && MsgServer.isUserFormat(paramList[1])) {
+				return paramList[1].toUpperCase();
+			}
 		}
+		return null;
 	}
-	
-	
+
 	public String getUser() {
 		return user;
 	}
