@@ -19,9 +19,7 @@ public class MainServerWEB {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-//        Server s = new Server();
-//        s.run();
-    	
-    	ActionAPOP apop= new ActionAPOP(" laura sdfhsdhfsdhgofshgfsknh ");
+        Server s = new Server();
+        s.run();
     }
 }

@@ -13,7 +13,7 @@ import util.MsgServer.MsgServer;
 public abstract class ActionType {
 
 	private BufferedOutputStream outDonnees;
-	private String user;
+	protected String user;
 	private String sendDeb = "["+user+"] ";
 
 	public ActionType(BufferedOutputStream outDonnees) {
@@ -45,7 +45,7 @@ public abstract class ActionType {
 	
 	protected String reponseKo(String msg){
 		//TODO construire réponse ko
-		return "-KO "+msg;
+		return "-ERR "+msg;
 	}
 
 	protected boolean sendMsg(String msg){
