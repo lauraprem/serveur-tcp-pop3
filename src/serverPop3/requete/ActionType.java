@@ -14,7 +14,6 @@ public abstract class ActionType {
 
 	private BufferedOutputStream outDonnees;
 	protected String user;
-	private String sendDeb = "["+user+"] ";
 
 	public ActionType(BufferedOutputStream outDonnees) {
 		super();
@@ -49,7 +48,7 @@ public abstract class ActionType {
 	}
 
 	protected boolean sendMsg(String msg){
-		return sendToClient(msg);
+		return sendToClient(msg+"\r\n");
 	}
 	
 	protected boolean sendToClient(String msg){
