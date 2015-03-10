@@ -1,23 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration package="log4j" status="WARN">
-
-	<appender name="util" class="org.apache.log4j.FileAppender">
-		<param name="File" value="/tmp/util.log" />
-		<param name="Append" value="true" />
-		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="%t %-5p %c{2} - %m%n" />
-		</layout>
-	</appender>
-
+	<Appenders>
+		<File name="MyFile" fileName="logs/app.log">
+			  <PatternLayout pattern="%d{HH:mm:ss.SSS} - [%-5level] - %msg%n"/>
+		</File>
+		<Async name="Async">
+			<AppenderRef ref="MyFile" />
+		</Async>
+	</Appenders>
 	<Loggers>
 		<Root level="info">
-			<AppenderRef ref="util" />
-		</Root>
-		<Root level="warn">
-			<AppenderRef ref="util" />
-		</Root>
-		<Root level="error">
-			<AppenderRef ref="util" />
+			<AppenderRef ref="Async" />
 		</Root>
 	</Loggers>
-</Configuration>
+</Configuration> 

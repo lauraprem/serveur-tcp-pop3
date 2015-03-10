@@ -7,21 +7,21 @@ public abstract class MsgServer {
 	public static String msgError(String msg, String getMessage, String user) {
 		String msgTemp = UserForm(user) + " Error" + " : " + msg;
 		System.out.println(msgTemp);
-		logger.error(user + " "+msgTemp);
+		logger.error(msgTemp);
 		return msgTemp;
 	}
 
 	public static String msgWarnning(String msg, String getMessage, String user) {
 		String msgTemp = UserForm(user) + " Warnning" + " : " + msg;
 		System.out.println(msgTemp);
-		logger.warn(user + " "+msgTemp);
+		logger.warn(msgTemp);
 		return msgTemp;
 	}
 
 	public static String msgInfo(String obj, String msg, String user) {
 		String msgTemp = UserForm(user) + " " + obj + " : " + msg;
 		System.out.println(msgTemp);
-		logger.info(user + " "+msgTemp);
+		logger.info(msgTemp);
 		return msgTemp;
 	}
 
