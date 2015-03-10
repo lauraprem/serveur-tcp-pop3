@@ -15,7 +15,7 @@ import util.Lock.LockStates;
 public class ActionAPOP extends ActionType {
 
 //	private File mail;
-	private String user;
+//	private String user;
 
 	public ActionAPOP(BufferedOutputStream outDonnees) {
 		super(outDonnees);
@@ -47,7 +47,7 @@ public class ActionAPOP extends ActionType {
 		if(!params.equals("")){
 			String[] paramList = params.split(" ");
 		
-			return paramList[0];
+			return paramList[1].toUpperCase();
 		}else{
 			return null;
 		}
