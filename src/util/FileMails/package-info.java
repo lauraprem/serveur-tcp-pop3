@@ -5,4 +5,4 @@
  * @author Laura
  *
  */
-package util.FileMail;
+package util.FileMails;

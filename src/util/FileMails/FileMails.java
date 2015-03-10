@@ -1,7 +1,8 @@
-package util.FileMail;
+package util.FileMails;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -80,36 +81,39 @@ public class FileMails implements Serializable {
 		return mail.CalculationSizeMail();
 	}
 
-	public void extractMails() {
-		String path = location + name;
+	public boolean extractMails() {
+		String path = location+name+extension;
 		File fichier = new File(path);
 		ObjectInputStream ois;
-		boolean check = true;
-		
-		// Récupération des mails
-		while (check) {
-			
+
 			try {
 				ois = new ObjectInputStream(new BufferedInputStream(
 						new FileInputStream(fichier)));
 				
-				// Récupération d'un mail
-				Mail mail = (Mail) ois.readObject();
-				this.listMail.add(mail);
-				// this.listMail.set(mail.getId(), mail);
+				// Récupération des mails
+				while(true){
+				    try{
+						Mail mail = (Mail) ois.readObject();
+						this.listMail.add(mail);
+				    } catch (EOFException e){
+				    	break;
+			    	}
+			    }
+				
 				ois.close();
+				
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
-				check = false;
+				return false;
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
-				check = false;
+				return false;
 			} catch (IOException e) {
 				e.printStackTrace();
-				check = false;
+				return false;
 			}
-		}
-		int i = 1;
+			
+			return true;
 	}
 
 	public void saveMails() {
@@ -127,28 +131,28 @@ public class FileMails implements Serializable {
 
 			// Ecrire chaque objet Mail dans le fichier
 			ArrayList<String> listHeader = new ArrayList<String>();
-			listHeader.add("Message-ID: <1234@local.machine.example><CR><LF>");
-			listHeader.add("From: John Doe <jdoe@machine.example><CR><LF>");
-			listHeader.add("Subject: C'est un essai<CR><LF>");
+			listHeader.add("Message-ID: <1234@local.machine.example>");
+			listHeader.add("From: John Doe <jdoe@machine.example>");
+			listHeader.add("Subject: C'est un essai");
 			ArrayList<String> listLine = new ArrayList<String>();
-			listLine.add("C'est un message juste pour tester. Alors, \"Test\".<CR><LF>");
+			listLine.add("C'est un message juste pour tester. Alors, \"Test\".");
 			oos.writeObject(new Mail(1, listHeader, listLine));
 
-			// ArrayList<String> listHeader = new ArrayList<String>();
-			// listHeader.add("Message-ID: <1234@local.machine.example><CR><LF>");
-			// listHeader.add("From: John Doe <jdoe@machine.example><CR><LF>");
-			// listHeader.add("Subject: C'est un essai<CR><LF>");
-			// ArrayList<String> listLine = new ArrayList<String>();
-			// listLine.add("C'est un message juste pour tester. Alors, \"Test\".<CR><LF>");
-			// oos.writeObject(new Mail("1234", listHeader,listLine));
-			//
-			// ArrayList<String> listHeader = new ArrayList<String>();
-			// listHeader.add("Message-ID: <1234@local.machine.example><CR><LF>");
-			// listHeader.add("From: John Doe <jdoe@machine.example><CR><LF>");
-			// listHeader.add("Subject: C'est un essai<CR><LF>");
-			// ArrayList<String> listLine = new ArrayList<String>();
-			// listLine.add("C'est un message juste pour tester. Alors, \"Test\".<CR><LF>");
-			// oos.writeObject(new Mail("1234", listHeader,listLine));
+			 listHeader = new ArrayList<String>();
+			 listHeader.add("Message-ID: <1234@local.machine.example");
+			 listHeader.add("From: John Doe <jdoe@machine.example>");
+			 listHeader.add("Subject: C'est un essai 2");
+			 listLine = new ArrayList<String>();
+			 listLine.add("C'est un message juste pour tester. Alors, \"Test\".");
+			 oos.writeObject(new Mail(2, listHeader,listLine));
+			
+			 listHeader = new ArrayList<String>();
+			 listHeader.add("Message-ID: <1234@local.machine.example>");
+			 listHeader.add("From: John Doe <jdoe@machine.example>");
+			 listHeader.add("Subject: C'est un essai 3 ééé");
+			 listLine = new ArrayList<String>();
+			 listLine.add("C'est un message juste pour tester. Alors, \"Test\".");
+			 oos.writeObject(new Mail(3, listHeader,listLine));
 
 			oos.close();
 

@@ -1,46 +1,55 @@
 package serverPop3.requete;
 
 import java.io.BufferedOutputStream;
+import java.util.ArrayList;
 
-import util.FileMail.FileMails;
+import util.FileMails.FileMails;
+import util.FileMails.Mail;
 
 /**
 *
 * @author Corinne & Laura
 */
 public class ActionRETR extends ActionType {
-
-	public String numMsg;
 	
-	public ActionRETR(String params) {
-		super();
+	private Mail mail;
+	
+	public ActionRETR(BufferedOutputStream outDonnees) {
+		super(outDonnees);
 		
-		numMsg = params.trim();
-		
-		// vérification si le numéro du massage existe
-		// TODO si num n'existe pas => numMsg = null
-//		numMsg = null;
+		// Permettra de sauvegarder le mail courrent
+		mail = new Mail();
 	}
 	
-	public boolean PrecessingDefault(BufferedOutputStream outDonnees,String user) {
-		if(numMsg != null){
-//			FileMails fileMails = new FileMails(user+EXTENSION_MAIL,MAIL_PATH);
-//			fileMails.extractMails();
-			// TODO Récupération du message+ calcul taille en octet
-			// TODO envoie message : +OK {nb octets}
-			// TODO envoie message : {contenu du message}
+	public boolean PrecessingDefault(String params, FileMails fileMails) {
+		
+		// Récupération du numéro du mail
+		int num;
+		try{
+			num = Integer.parseInt(params.trim());
+		}catch(NumberFormatException e){
+			num = -1;
+		}
+				
+		// Récupération du message s'il existe
+		mail = fileMails.getMail(num);
+		
+		// Envoi de la réponse au client
+		if(mail != null){
+			
+			// Envoi message : +OK {nb octets}
+			sendMsg(super.reponseOk(mail.CalculationSizeMail()+""));
+			
+			// Envoi message : {contenu du message}
+			sendToClient(mail.toString());
+			
 			return true;
 		}else{
-			// TODO envoie message : erreur
+			
+			// Envoi message : erreur
+			sendMsg( super.reponseKo("Number is not valid"));
+			
 			return false;
 		}
-	}
-	
-	public boolean NumExist(String num){
-		return false;
-	}
-	
-	public String mailMsgExtract(){
-		return "";
 	}
 }

@@ -1,4 +1,4 @@
-package util.FileMail;
+package util.FileMails;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;

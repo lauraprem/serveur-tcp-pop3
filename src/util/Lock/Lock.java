@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import serverPop3.requete.ActionType;
+import serverPop3.requete.Requete;
 
 /**
  * Permet de gérer le verrou sur les utilisateurs
@@ -22,7 +23,7 @@ public class Lock {
 	 * @return true si vérouillé false si non vérouillé
 	 */
 	public static boolean isLocked(String user) {
-		File userFolder = new File(ActionType.MAIL_PATH + user.toUpperCase());
+		File userFolder = new File(Requete.MAIL_PATH + user.toUpperCase());
 		if (userFolder.exists() && userFolder.isDirectory()
 				&& userFolder.list() != null) {
 			String[] files = userFolder.list();
@@ -48,7 +49,7 @@ public class Lock {
 		if (isLocked(user)) {
 			return LockStates.ALREADY_LOCKED;
 		}
-		File lock = new File(ActionType.MAIL_PATH + user.toUpperCase()
+		File lock = new File(Requete.MAIL_PATH + user.toUpperCase()
 				+ "/LOCK.txt");
 		try {
 			if (lock.createNewFile()) {
@@ -73,7 +74,7 @@ public class Lock {
 		if (!isLocked(user)) {
 			return LockStates.ALREADY_UNLOCKED;
 		}
-		File lock = new File(ActionType.MAIL_PATH + user.toUpperCase()
+		File lock = new File(Requete.MAIL_PATH + user.toUpperCase()
 				+ "/LOCK.txt");
 		if (lock.delete()) {
 			return LockStates.UNLOCKED;
