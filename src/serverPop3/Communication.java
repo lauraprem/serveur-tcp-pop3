@@ -124,13 +124,11 @@ public class Communication extends Thread {
 		
 		// Récupération et validation de la commande en fonction de l'état
 		// courrent
-		String command = receive.substring(0, 4);
-		String params = receive.substring(4);
-		MsgServer.msgInfo("Command receive", command, user);
-		MsgServer.msgInfo("Params receive", params, user);
-		
-		// Vérification de la forme de la requête
-		if (command.length() >= 4) {			
+		if (receive.length() >= 4) { // si fin \r\n
+			String command = receive.substring(0, 4);
+			String params = receive.substring(4);
+			MsgServer.msgInfo("Command receive", command, user);
+			MsgServer.msgInfo("Params receive", params, user);
 
 			switch (etatCourant) {
 			case AUTORISATION:
@@ -158,7 +156,7 @@ public class Communication extends Thread {
 				switch (command) {
 				case "RETR":
 					MsgServer.msgInfo("processing","RETR ...", user);
-					isQuit = !requete.processingRetr(params);
+					requete.processingRetr(params);
 					break;
 				case "QUIT":
 					MsgServer.msgInfo("processing","QUIT ...", user);
