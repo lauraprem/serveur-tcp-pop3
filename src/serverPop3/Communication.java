@@ -114,25 +114,19 @@ public class Communication extends Thread {
 	 *            du client
 	 */
 	public boolean processingRequest(String receive) {
-		// Initialisation des actions
-		// ActionAPOP apop = new ActionAPOP(user,outDonnees); // Initialiser
-		// Lock => pas user partout
-
-		String[] requeteCut = receive.split(finRequete);
-
+		
 		// Permet de savoir si la connexion est à clôturer
 		boolean isQuit = false;
-
+		
+		// Récupération et validation de la commande en fonction de l'état
+		// courrent
+		String command = receive.substring(0, 4);
+		String params = receive.substring(4);
+		MsgServer.msgInfo("Command receive", command, user);
+		MsgServer.msgInfo("Params receive", params, user);
+		
 		// Vérification de la forme de la requête
-		if (receive.contains(finRequete) && requeteCut.length == 1
-				&& requeteCut[0].length() >= 4) {
-
-			// Récupération et validation de la commande en fonction de l'état
-			// courrent
-			String command = requeteCut[0].substring(0, 4);
-			String params = requeteCut[0].substring(4);
-			MsgServer.msgInfo("Command receive", command, user);
-			MsgServer.msgInfo("Params receive", params, user);
+		if (command.length() >= 4) {			
 
 			switch (etatCourant) {
 			case AUTORISATION:

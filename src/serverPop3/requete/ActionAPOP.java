@@ -23,7 +23,8 @@ public class ActionAPOP extends ActionType {
 	}
 
 	public Etat Apop(String params) {
-		// TODO authentfication + verif user
+		// TODO authentfication + verif user cas user null
+		
 		this.user = retrieveUser(params);
 //		this.mail = new File(Requete.MAIL_PATH + this.user
 //				+ Requete.EXTENSION_MAIL);
@@ -42,8 +43,13 @@ public class ActionAPOP extends ActionType {
 	}
 
 	public String retrieveUser(String params) {
-		// TODO découper string
-		return "laura";
+		if(!params.equals("")){
+			String[] paramList = params.split(" ");
+		
+			return paramList[0];
+		}else{
+			return null;
+		}
 	}
 	
 	public String getUser() {
