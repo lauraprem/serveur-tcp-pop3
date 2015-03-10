@@ -13,8 +13,8 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
-import serverPop3.requete.*;
-import util.FileMail.FileMails;
+import serverPop3.requete.Requete;
+import util.MsgServer.MsgServer;
 
 /**
  * @author Corinne & Laura
@@ -27,28 +27,20 @@ public class Communication extends Thread {
 	private PrintWriter out;
 	private BufferedOutputStream outDonnees;
 
+	private Requete requete;
 	private String finRequete;
 	private Etat etatCourant;
 	private String user;
 
-	private static final int uneMinute = 60000; // Verif + ou = 10 mins
-
-	// private static final File SERVEUR_Mail = new File("./StockMail/");
-
-	// demande client
-	// private String commande;
-	// private String fichierDemande;
-	// private byte[] fichierDonnees;
+	private static final int uneMinute = 60000;
 
 	public Communication(Socket connexion) {
-		// TODO timeout : comment le gérer ?
-		SO_TIMEOUT = 10 * uneMinute; // 10 minutes
+		SO_TIMEOUT = 10 * uneMinute;
 		socket = connexion;
 		try {
 			socket.setSoTimeout(SO_TIMEOUT);
 		} catch (SocketException ex) {
-			// TODO message erreur tempo expire
-			System.out.println("Error socket time-out : " + ex.getMessage());
+			MsgServer.msgError("socket time-out",ex.getMessage(), user);
 		}
 
 		// flux
@@ -57,43 +49,55 @@ public class Communication extends Thread {
 		outDonnees = null;
 
 		// Autre
-		finRequete = "\r\n";
+		requete = null;
+		// finRequete = "\r\n";
+		finRequete = "<CR><LF>";
+		user = socket.toString();
 		etatCourant = Etat.AUTORISATION;
 	}
 
 	@Override
 	public void run() {
-		
+
 		// Console connexion TCP correct
-		System.out.println("Connected : " + socket.toString());
+		System.out.println("Connected : " + user);
 
 		try {
 			in = new BufferedReader(new InputStreamReader(
 					socket.getInputStream()));
 			outDonnees = new BufferedOutputStream(socket.getOutputStream());
 
+			requete = new Requete(outDonnees);
+			// requete.set => port
+
 			// Envoi Message de bienvenue
-			String msg = "+OK Serveur POP3 ready"+finRequete;
+			String msg = "+OK Serveur POP3 ready" + finRequete;
 			outDonnees.write(msg.getBytes(), 0, (int) msg.getBytes().length);
 			outDonnees.flush();
-			System.out.println(msg);
-			
-			// Permet de savoir si la connexion est à clôturé
+			MsgServer.msgInfo("Send", msg, user);
+
+			// Permet de savoir si la connexion est à clôturer
 			boolean isQuit = false;
-			while(!isQuit){
-				
+			while (!isQuit) {
+
 				// recupere la premiere ligne de la requete du client
 				String ligne = in.readLine();
-				System.out.println("Request receive :" + ligne);
-				isQuit = processingRequest(ligne);
+//				if(user.equals(socket))
+				MsgServer.msgInfo("Request receive", ligne, user);
+
+				if (ligne != null) {
+					isQuit = processingRequest(ligne);
+				} else {
+					isQuit = true;
+				}
 			}
 
 		} catch (SocketTimeoutException e) {
-			System.out.println("time_out dépassé : " + e.getMessage());
+			System.out.println(user+" time_out dépassé : " + e.getMessage());
 			// TODO gestion erreur
 			// erreur(408);
 		} catch (IOException ex) {
-			System.out.println("Error : " + ex.getMessage());
+			System.out.println(user+" Error : " + ex.getMessage());
 			// erreur(500);
 		} finally {
 			close(in);
@@ -101,46 +105,56 @@ public class Communication extends Thread {
 			close(outDonnees);
 			close(socket);
 		}
-		System.out.println("Disconnected : " + socket.toString());
+		MsgServer.msgConnect(false, user);
 	}
 
 	/**
 	 * Traite la demande du client
 	 * 
-	 * @param requete du client
+	 * @param requete
+	 *            du client
 	 */
-	public boolean processingRequest(String requete) {
-		String[] requeteCut = requete.split(finRequete);
-		
-		// Permet de savoir si la connexion est à clôturé
+	public boolean processingRequest(String receive) {
+		// Initialisation des actions
+		// ActionAPOP apop = new ActionAPOP(user,outDonnees); // Initialiser
+		// Lock => pas user partout
+
+		String[] requeteCut = receive.split(finRequete);
+
+		// Permet de savoir si la connexion est à clôturer
 		boolean isQuit = false;
 
 		// Vérification de la forme de la requête
-		if (requete.contains(finRequete) && requeteCut.length == 1
+		if (receive.contains(finRequete) && requeteCut.length == 1
 				&& requeteCut[0].length() >= 4) {
 
 			// Récupération et validation de la commande en fonction de l'état
 			// courrent
 			String command = requeteCut[0].substring(0, 4);
 			String params = requeteCut[0].substring(4);
-			System.out.println("Command receive : " + command);
-			System.out.println("Params receive : " + params);
+			MsgServer.msgInfo("Command receive", command, user);
+			MsgServer.msgInfo("Params receive", params, user);
 
 			switch (etatCourant) {
 			case AUTORISATION:
 				switch (command) {
 				case "APOP":
-					System.out.println("processing : APOP ...");
-					ActionAPOP apop = new ActionAPOP(user);
-					etatCourant = apop.Apop(outDonnees);
+					MsgServer.msgInfo("processing","APOP ...", user);
+					etatCourant = Etat.TRANSACTION; // = apop.Apop(outDonnees);
+
+					// Récupération des mails
+					if (etatCourant == Etat.TRANSACTION) {
+						// TODO A enlever le user
+						user = "TEST";
+						requete.setUserRequete("TEST");
+					}
 					break;
 				case "QUIT":
-					System.out.println("processing : QUIT ...");
-					ActionQUIT actionQuit = new ActionQUIT();
-					isQuit = actionQuit.PrecessingDefault(outDonnees,user);
+					MsgServer.msgInfo("processing","QUIT ...", user);
+					isQuit = requete.processingQuit();
 					break;
 				default:
-					System.out.println("Unidentified command : " + command);
+					MsgServer.msgWarnning("Unidentified command", command, user);
 					break;
 				}
 				break;
@@ -148,30 +162,28 @@ public class Communication extends Thread {
 			case TRANSACTION:
 				switch (command) {
 				case "RETR":
-					System.out.println("processing : RETR ...");
-					ActionRETR actionRetr = new ActionRETR(params);
-					isQuit = !actionRetr.PrecessingDefault(outDonnees,user);
+					MsgServer.msgInfo("processing","RETR ...", user);
+					isQuit = !requete.processingRetr(params);
 					break;
 				case "QUIT":
-					System.out.println("processing : QUIT ...");
-					ActionQUIT actionQuit = new ActionQUIT();
-					isQuit = actionQuit.PrecessingDefault(outDonnees,user);
+					MsgServer.msgInfo("processing","QUIT ...", user);
+					isQuit = requete.processingQuit();
 					break;
 				default:
-					System.out.println("Unidentified command : " + command);
+					MsgServer.msgWarnning("Unidentified command", command, user);
 					break;
 				}
 				break;
-				
+
 			default:
-				System.out.println("Unidentified etat : " + etatCourant);
+				MsgServer.msgWarnning("Unidentified etat", etatCourant.toString(), user);
 				break;
 			}
 
 		} else {
-			System.out.println("Invalid request form");
+			MsgServer.msgWarnning("Invalid request form", null, user);
 		}
-		
+
 		return isQuit;
 	}
 

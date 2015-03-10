@@ -17,7 +17,8 @@ public class ActionAPOP extends ActionType {
 	public File mail;
 	public String user;
 
-	public ActionAPOP(String user) {
+	public ActionAPOP(String user, BufferedOutputStream outDonnees,String MAIL_PATH, String EXTENSION_MAIL) {
+		super(outDonnees);
 		this.user = user.toUpperCase();
 		this.mail = new File(MAIL_PATH + this.user + EXTENSION_MAIL);
 	}
@@ -27,13 +28,13 @@ public class ActionAPOP extends ActionType {
 		LockStates lockState = Lock.lock(user);
 		switch(lockState){
 			case LOCKED : 
-				super.sendMsg(super.reponseOk(""), out);
+				super.sendMsg(super.reponseOk(""));
 				return Etat.TRANSACTION;
 			case ALREADY_LOCKED : 
-				super.sendMsg(super.reponseKo("lock aldready in use."), out);
+				super.sendMsg(super.reponseKo("lock aldready in use."));
 				return Etat.AUTORISATION;
 			default : 
-				super.sendMsg(super.reponseKo("error."), out);
+				super.sendMsg(super.reponseKo("error."));
 				return Etat.AUTORISATION;
 		}		
 	}

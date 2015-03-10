@@ -7,7 +7,7 @@
 package serverPop3;
 
 import serverPop3.requete.ActionAPOP;
-import util.Lock.Lock;
+
 
 /**
  *
@@ -19,7 +19,9 @@ public class MainServerWEB {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Server s = new Server();
-        s.run();
+//        Server s = new Server();
+//        s.run();
+    	
+    	ActionAPOP apop= new ActionAPOP(" laura sdfhsdhfsdhgofshgfsknh ");
     }
 }
