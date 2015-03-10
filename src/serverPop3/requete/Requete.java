@@ -2,6 +2,7 @@ package serverPop3.requete;
 
 import java.io.BufferedOutputStream;
 
+import serverPop3.Etat;
 import util.FileMails.FileMails;
 
 public class Requete {
@@ -17,7 +18,7 @@ public class Requete {
 
 	public Requete(BufferedOutputStream outDonnees) {
 		super();
-		// apop = new ActionAPOP(outDonnees);
+		apop = new ActionAPOP(outDonnees);
 		quit = new ActionQUIT(outDonnees);
 		retr = new ActionRETR(outDonnees);
 		fileMails = null;
@@ -47,20 +48,27 @@ public class Requete {
 		this.retr = retr;
 	}
 
-	public void setUserRequete(String user) {
-		// apop = new ActionAPOP(outDonnees);
-		quit.setUser(user);
-		retr.setUser(user);
+	public void setUserRequete() {
+		String user = apop.getUser();
+		if (user != null) {
+			quit.setUser(user);
+			retr.setUser(user);
 
-		fileMails = new FileMails(user, EXTENSION_MAIL, MAIL_PATH + user + "/");
-		// TODO A enlever le save
-		fileMails.saveMails();
-		fileMails.extractMails();
+			fileMails = new FileMails(user, EXTENSION_MAIL, MAIL_PATH + user
+					+ "/");
+			// TODO A enlever le save
+			fileMails.saveMails();
+			fileMails.extractMails();
+		}
 	}
 
-	// public boolean processingApop() {
-	// return apop.PrecessingDefault();
-	// }
+	public Etat processingApop(String params) {
+		Etat etat = apop.Apop(params);
+		if (etat == Etat.TRANSACTION) {
+			setUserRequete();
+		}
+		return etat;
+	}
 
 	public boolean processingQuit() {
 		return quit.PrecessingDefault();

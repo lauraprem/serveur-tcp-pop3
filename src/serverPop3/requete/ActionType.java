@@ -13,7 +13,7 @@ import util.MsgServer.MsgServer;
 public abstract class ActionType {
 
 	private BufferedOutputStream outDonnees;
-	private String user;
+	protected String user;
 	private String sendDeb = "["+user+"] ";
 
 	public ActionType(BufferedOutputStream outDonnees) {

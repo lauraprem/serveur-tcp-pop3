@@ -63,8 +63,7 @@ public class Communication extends Thread {
 		System.out.println("Connected : " + user);
 
 		try {
-			in = new BufferedReader(new InputStreamReader(
-					socket.getInputStream()));
+			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			outDonnees = new BufferedOutputStream(socket.getOutputStream());
 
 			requete = new Requete(outDonnees);
@@ -140,13 +139,11 @@ public class Communication extends Thread {
 				switch (command) {
 				case "APOP":
 					MsgServer.msgInfo("processing","APOP ...", user);
-					etatCourant = Etat.TRANSACTION; // = apop.Apop(outDonnees);
+					etatCourant = requete.processingApop(params);
 
 					// Récupération des mails
 					if (etatCourant == Etat.TRANSACTION) {
-						// TODO A enlever le user
-						user = "TEST";
-						requete.setUserRequete("TEST");
+						user = requete.getApop().getUser();
 					}
 					break;
 				case "QUIT":

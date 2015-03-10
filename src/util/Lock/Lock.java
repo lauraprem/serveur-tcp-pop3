@@ -3,7 +3,6 @@ package util.Lock;
 import java.io.File;
 import java.io.IOException;
 
-import serverPop3.requete.ActionType;
 import serverPop3.requete.Requete;
 
 /**

@@ -6,6 +6,9 @@
 
 package serverPop3;
 
+import java.io.BufferedOutputStream;
+import java.io.OutputStream;
+
 import serverPop3.requete.ActionAPOP;
 
 
@@ -21,7 +24,6 @@ public class MainServerWEB {
     public static void main(String[] args) {
 //        Server s = new Server();
 //        s.run();
-    	
-    	ActionAPOP apop= new ActionAPOP(" laura sdfhsdhfsdhgofshgfsknh ");
+   
     }
 }
