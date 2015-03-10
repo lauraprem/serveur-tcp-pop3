@@ -50,8 +50,8 @@ public class Communication extends Thread {
 
 		// Autre
 		requete = null;
-		// finRequete = "\r\n";
-		finRequete = "<CR><LF>";
+		 finRequete = "\r\n";
+//		finRequete = "<CR><LF>";
 		user = socket.toString();
 		etatCourant = Etat.AUTORISATION;
 	}

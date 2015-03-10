@@ -6,11 +6,6 @@
 
 package serverPop3;
 
-import java.io.BufferedOutputStream;
-import java.io.OutputStream;
-
-import serverPop3.requete.ActionAPOP;
-
 
 /**
  *
