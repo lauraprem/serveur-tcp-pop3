@@ -48,7 +48,7 @@ public class Lock {
 		if (isLocked(user)) {
 			return LockStates.ALREADY_LOCKED;
 		}
-		File lock = new File(Requete.MAIL_PATH + user.toUpperCase()
+		File lock = new File(Requete.MAIL_PATH + user.toUpperCase() 
 				+ "/LOCK.txt");
 		try {
 			if (lock.createNewFile()) {

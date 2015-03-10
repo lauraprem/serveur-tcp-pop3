@@ -1,56 +1,58 @@
 package util.MsgServer;
 
 public abstract class MsgServer {
-	
+
 	public static String msgError(String msg, String getMessage, String user) {
-		String msgTemp = UserForm(user)+" Error"+" : " + msg;
+		String msgTemp = UserForm(user) + " Error" + " : " + msg;
 		System.out.println(msgTemp);
-		
+
 		return msgTemp;
 	}
-	
+
 	public static String msgWarnning(String msg, String getMessage, String user) {
-		String msgTemp = UserForm(user)+" Warnning"+" : " + msg;
+		String msgTemp = UserForm(user) + " Warnning" + " : " + msg;
 		System.out.println(msgTemp);
-		
+
 		return msgTemp;
 	}
-	
+
 	public static String msgInfo(String obj, String msg, String user) {
-		String msgTemp = UserForm(user)+" "+obj+" : " + msg;
+		String msgTemp = UserForm(user) + " " + obj + " : " + msg;
 		System.out.println(msgTemp);
-		
+
 		return msgTemp;
 	}
-	
+
 	public static String msgConnect(boolean connected, String user) {
 		String msgTemp;
-		if(connected == true){
+		if (connected == true) {
 			msgTemp = "Connected : " + UserForm(user);
-		}else{
+		} else {
 			msgTemp = "Disconnected : " + UserForm(user);
 		}
 		System.out.println(msgTemp);
-		
+
 		return msgTemp;
 	}
-	
-	private static String UserForm(String user){
-		if(isUserFormat(user)){
-			user = "["+user+"]";
+
+	private static String UserForm(String user) {
+		if (isUserFormat(user)) {
+			user = "[" + user + "]";
 		}
-		
+
 		return user;
 	}
-	
+
 	/**
 	 * permet de savoir si le user est désigné par son nom ou son ip et son port
+	 * 
 	 * @param user
-	 * @return
-	 * true si nom
-	 * false si adresse ip et port
+	 * @return true si nom false si adresse ip et port
 	 */
-	public static boolean isUserFormat(String user){
-		return user.split(",localport=").length == 1;
+	public static boolean isUserFormat(String user) {
+		if (user != null && user != "") {
+			return user.split(",localport=").length == 1;
+		}
+		return false;
 	}
 }
