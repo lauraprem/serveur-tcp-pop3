@@ -49,7 +49,7 @@ public abstract class ActionType {
 	}
 
 	protected boolean sendMsg(String msg){
-		return sendToClient(msg+"\r\n");
+		return sendToClient(msg);
 	}
 	
 	protected boolean sendToClient(String msg){

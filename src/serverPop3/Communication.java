@@ -50,7 +50,7 @@ public class Communication extends Thread {
 
 		// Autre
 		requete = null;
-		 finRequete = "\r\n";
+//		 finRequete = "\r\n";
 //		finRequete = "<CR><LF>";
 		user = socket.toString();
 		etatCourant = Etat.AUTORISATION;
@@ -70,7 +70,7 @@ public class Communication extends Thread {
 			// requete.set => port
 
 			// Envoi Message de bienvenue
-			String msg = "+OK Serveur POP3 ready" + finRequete;
+			String msg = "+OK Serveur POP3 ready";
 			outDonnees.write(msg.getBytes(), 0, (int) msg.getBytes().length);
 			outDonnees.flush();
 			MsgServer.msgInfo("Send", msg, user);
