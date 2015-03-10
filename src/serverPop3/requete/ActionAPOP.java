@@ -29,9 +29,14 @@ public class ActionAPOP extends ActionType {
 		this.user = retrieveUser(params);
 		// this.mail = new File(Requete.MAIL_PATH + this.user
 		// + Requete.EXTENSION_MAIL);
-		if(user == null)
+		if(user == null || user == "")
 		{
-			super.reponseKo("no user was passed.");
+			super.sendMsg(super.reponseKo("no user was passed."));
+			return Etat.AUTORISATION;
+		}
+		if(!Lock.existUser(user))
+		{
+			super.sendMsg(super.reponseKo("the user doesn't exists."));
 			return Etat.AUTORISATION;
 		}
 		LockStates lockState = Lock.lock(user);
