@@ -99,7 +99,7 @@ public class Mail implements Serializable{
 		}
 		stringMail = stringMail + endLine;
 		for (int i = 0; i < listLine.size(); i++) {
-			stringMail = stringMail + listHeader.get(i);
+			stringMail = stringMail + listLine.get(i);
 		}
 		stringMail = stringMail + endMsg;
 		
