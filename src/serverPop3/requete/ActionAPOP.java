@@ -41,10 +41,17 @@ public class ActionAPOP extends ActionType {
 		}
 	}
 
+
 	public String retrieveUser(String params) {
-		// TODO découper string
-		return "laura";
+		if(!params.equals("")){
+			String[] paramList = params.split(" ");
+		
+			return paramList[0];
+		}else{
+			return null;
+		}
 	}
+	
 	
 	public String getUser() {
 		return user;
