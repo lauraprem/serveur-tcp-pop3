@@ -57,7 +57,7 @@ public class Requete {
 			fileMails = new FileMails(user, EXTENSION_MAIL, MAIL_PATH + user
 					+ "/");
 			// TODO A enlever le save
-			fileMails.saveMails();
+//			fileMails.saveMails();
 			fileMails.extractMails();
 		}
 	}

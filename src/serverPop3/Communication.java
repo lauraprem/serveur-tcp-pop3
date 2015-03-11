@@ -82,7 +82,8 @@ public class Communication extends Thread {
 			while (!isQuit) {
 
 				// recupere la premiere ligne de la requete du client
-				String ligne = in.readLine();
+//				String ligne = in.readLine();
+				String ligne = readLine(); //in.readLine();
 				// if(user.equals(socket))
 				MsgServer.msgInfo("Request receive", ligne, user);
 
@@ -241,6 +242,28 @@ public class Communication extends Thread {
 			MsgServer.msgError("IOException", e.getMessage(), user);
 			return false;
 		}
+	}
+	
+	private String readLine() throws IOException{
+		InputStream ligneByte = socket.getInputStream();
+		String ligne="";
+		boolean isEndLine = false;
+		boolean isNull = false;
+		while(!isEndLine && !isNull){
+			int reading = ligneByte.read();
+			
+			if(reading == -1){
+				return null;
+			}
+			
+			ligne = ligne + (char)reading;
+			isEndLine = ligne.contains(finRequete);
+			isNull = ligne.contains("null");
+		}
+		
+		String[] requeteString = ligne.split(finRequete);
+		
+		return requeteString[0];
 	}
 	
 }

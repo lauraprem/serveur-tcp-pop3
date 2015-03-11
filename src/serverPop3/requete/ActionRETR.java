@@ -47,7 +47,7 @@ public class ActionRETR extends ActionType {
 		}else{
 			
 			// Envoi message : erreur
-			sendMsg( super.reponseKo("Number is not valid"));
+			sendMsg( super.reponseKo("Number of message is not valid"));
 			
 			return false;
 		}

@@ -65,9 +65,11 @@ public class FileMails implements Serializable {
 	}
 
 	public Mail getMail(int num) {
-		for (Mail mail : listMail) {
-			if (mail.getId() == num) {
-				return mail;
+		if(!listMail.isEmpty()){
+			for (Mail mail : listMail) {
+				if (mail.getId() == num) {
+					return mail;
+				}
 			}
 		}
 		return null;
@@ -77,8 +79,12 @@ public class FileMails implements Serializable {
 
 		// Recherche du mail
 		Mail mail = getMail(num);
-
-		return mail.CalculationSizeMail();
+		
+		if(mail != null){
+			return mail.CalculationSizeMail();
+		}
+		
+		return 0;
 	}
 
 	public boolean extractMails() {
@@ -89,6 +95,7 @@ public class FileMails implements Serializable {
 			try {
 				ois = new ObjectInputStream(new BufferedInputStream(
 						new FileInputStream(fichier)));
+				
 				
 				// Récupération des mails
 				while(true){
@@ -102,14 +109,17 @@ public class FileMails implements Serializable {
 				
 				ois.close();
 				
+			}catch(java.io.EOFException e){ // fichier vide dès début => 0 mails
+//				e.printStackTrace();
+				return false;
 			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 				return false;
 			} catch (FileNotFoundException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 				return false;
 			} catch (IOException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 				return false;
 			}
 			
