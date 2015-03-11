@@ -22,13 +22,15 @@ public class Lock {
 	 * @return true si vérouillé false si non vérouillé
 	 */
 	public static boolean isLocked(String user) {
+		if(user != null && user != ""){
 		File userFolder = new File(Requete.MAIL_PATH + user.toUpperCase());
-		if (userFolder.exists() && userFolder.isDirectory()
-				&& userFolder.list() != null) {
-			String[] files = userFolder.list();
-			for (int i = 0; i < files.length; i++) {
-				if (files[i].equals(LOCK)) {
-					return true;
+			if (userFolder.exists() && userFolder.isDirectory()
+					&& userFolder.list() != null) {
+				String[] files = userFolder.list();
+				for (int i = 0; i < files.length; i++) {
+					if (files[i].equals(LOCK)) {
+						return true;
+					}
 				}
 			}
 		}
