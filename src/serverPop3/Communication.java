@@ -248,8 +248,7 @@ public class Communication extends Thread {
 		InputStream ligneByte = socket.getInputStream();
 		String ligne="";
 		boolean isEndLine = false;
-		boolean isNull = false;
-		while(!isEndLine && !isNull){
+		while(!isEndLine){
 			int reading = ligneByte.read();
 			
 			if(reading == -1){
@@ -258,7 +257,6 @@ public class Communication extends Thread {
 			
 			ligne = ligne + (char)reading;
 			isEndLine = ligne.contains(finRequete);
-			isNull = ligne.contains("null");
 		}
 		
 		String[] requeteString = ligne.split(finRequete);
