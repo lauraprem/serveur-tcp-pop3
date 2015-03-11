@@ -3,6 +3,7 @@ package serverPop3.requete;
 import java.io.BufferedOutputStream;
 import java.util.ArrayList;
 
+import serverPop3.Etat;
 import util.Lock.Lock;
 import util.Lock.LockStates;
 
@@ -20,7 +21,7 @@ public class ActionQUIT extends ActionType {
 		// TODO A enlever ou laisser si static (voir avec Laura)
 		// Libération du verrou s'il est à libérer
 		String msg;
-		if (Lock.unlock(user) == LockStates.UNLOCKED) {
+		if (user == null || user == "" ||!Lock.existUser(user)||Lock.unlock(user) != LockStates.ERROR) {
 
 			// Envoi du message au client
 			msg = super.reponseOk("POP3 server signing off");
