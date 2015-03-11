@@ -149,7 +149,7 @@ public class FileMails implements Serializable {
 			 listHeader = new ArrayList<String>();
 			 listHeader.add("Message-ID: <1234@local.machine.example>");
 			 listHeader.add("From: John Doe <jdoe@machine.example>");
-			 listHeader.add("Subject: C'est un essai 3 ייי");
+			 listHeader.add("Subject: C'est un essai 3");
 			 listLine = new ArrayList<String>();
 			 listLine.add("C'est un message juste pour tester. Alors, \"Test\".");
 			 oos.writeObject(new Mail(3, listHeader,listLine));
