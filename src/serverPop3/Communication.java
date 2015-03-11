@@ -62,7 +62,7 @@ public class Communication extends Thread {
 	public void run() {
 
 		// Console connexion TCP correct
-		System.out.println("Connected : " + user);
+		MsgServer.msgConnect(true, user);
 
 		try {
 			in = new BufferedReader(new InputStreamReader(

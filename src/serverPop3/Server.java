@@ -24,6 +24,7 @@ public class Server extends Thread {
     public void initSocketServeur() {
         try {
             socketServeur = new ServerSocket(portServeur, 6);// nombre maximum de client connecté
+    		System.out.println("Server started ......");
         } catch (IOException ex) {
             System.err.println("Port déjà occupé : " + ex.getMessage());
         }
@@ -34,7 +35,7 @@ public class Server extends Thread {
         while (true) {
             try {
                 Socket connexion;
-                
+
                 // Attente de demande de connexion
                 connexion = socketServeur.accept();
 
