@@ -146,6 +146,7 @@ public class Communication extends Thread {
 					break;
 				case "QUIT":
 					MsgServer.msgInfo("processing", "QUIT ...", user);
+					requete.getQuit().setUser(user);
 					isQuit = requete.processingQuit();
 					break;
 				default:
