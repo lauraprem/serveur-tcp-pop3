@@ -20,6 +20,7 @@ public abstract class MsgServer {
 
 	public static String msgInfo(String obj, String msg, String user) {
 		String msgTemp = UserForm(user) + " " + obj + " : " + msg;
+		msgTemp = msgTemp.replaceAll("\r\n", "");
 		System.out.println(msgTemp);
 		logger.info(msgTemp);
 		return msgTemp;
