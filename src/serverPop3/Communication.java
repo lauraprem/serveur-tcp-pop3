@@ -125,7 +125,7 @@ public class Communication extends Thread {
 
 		// Récupération et validation de la commande en fonction de l'état
 		// courrent
-		if (receive.length() >= 4) { // si fin \r\n
+		if (receive.length() >= 4) {  // si fin \r\n
 			String command = receive.substring(0, 4);
 			String params = receive.substring(4);
 			MsgServer.msgInfo("Command receive", command, user);
