@@ -1,6 +1,7 @@
 package serverPop3.requete;
 
 import java.io.BufferedOutputStream;
+import java.sql.Timestamp;
 
 import serverPop3.Etat;
 import util.FileMails.FileMails;
@@ -62,8 +63,8 @@ public class Requete {
 		}
 	}
 
-	public Etat processingApop(String params) {
-		Etat etat = apop.Apop(params);
+	public Etat processingApop(String params, Timestamp timestamp) {
+		Etat etat = apop.Apop(params,timestamp);
 		if (etat == Etat.TRANSACTION) {
 			setUserRequete();
 		}

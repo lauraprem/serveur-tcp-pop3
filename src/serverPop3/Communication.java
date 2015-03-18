@@ -12,6 +12,10 @@ import java.io.Writer;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.Timestamp;
+import java.util.Arrays;
 
 import serverPop3.requete.Requete;
 import util.Lock.Lock;
@@ -33,11 +37,14 @@ public class Communication extends Thread {
 	private Etat etatCourant;
 	private String user;
 
+	private Timestamp timestamp;
+	
 	private static final int uneMinute = 60000;
 
 	public Communication(Socket connexion) {
 		SO_TIMEOUT = 10 * uneMinute;
 		socket = connexion;
+		timestamp = new Timestamp(System.currentTimeMillis());
 		try {
 			socket.setSoTimeout(SO_TIMEOUT);
 		} catch (SocketException ex) {
@@ -72,12 +79,13 @@ public class Communication extends Thread {
 			requete = new Requete(outDonnees);
 
 			// Envoi Message de bienvenue
-			String msg = "+OK Serveur POP3 ready" + finRequete;
+			String msg = "+OK Serveur POP3 ready " + timestamp.getTime() + finRequete;
+			System.out.println(msg);
 			outDonnees.write(msg.getBytes(), 0, (int) msg.getBytes().length);
 			outDonnees.flush();
 			MsgServer.msgInfo("Send", msg, user);
 
-			// Permet de savoir si la connexion est à clôturer
+			// Permet de savoir si la connexion est ï¿½ clï¿½turer
 			boolean isQuit = false;
 			while (!isQuit) {
 
@@ -95,7 +103,7 @@ public class Communication extends Thread {
 			}
 
 		} catch (SocketTimeoutException e) {
-			System.out.println(user + " time_out dépassé : " + e.getMessage());
+			System.out.println(user + " time_out dï¿½passï¿½ : " + e.getMessage());
 			// TODO gestion erreur
 			// erreur(408);
 		} catch (IOException ex) {
@@ -121,10 +129,10 @@ public class Communication extends Thread {
 	 */
 	public boolean processingRequest(String receive) {
 
-		// Permet de savoir si la connexion est à clôturer
+		// Permet de savoir si la connexion est ï¿½ clï¿½turer
 		boolean isQuit = false;
 
-		// Récupération et validation de la commande en fonction de l'état
+		// Rï¿½cupï¿½ration et validation de la commande en fonction de l'ï¿½tat
 		// courrent
 		if (receive.length() >= 4) {  // si fin \r\n
 			String command = receive.substring(0, 4);
@@ -137,9 +145,9 @@ public class Communication extends Thread {
 				switch (command) {
 				case "APOP":
 					MsgServer.msgInfo("processing", "APOP ...", user);
-					etatCourant = requete.processingApop(params);
+					etatCourant = requete.processingApop(params, timestamp);
 
-					// Récupération des mails
+					// Rï¿½cupï¿½ration des mails
 					if (etatCourant == Etat.TRANSACTION) {
 						user = requete.getApop().getUser();
 					}
@@ -193,7 +201,7 @@ public class Communication extends Thread {
 	 * Ferme les flux.
 	 *
 	 * @param stream
-	 *            flux qui va être fermé
+	 *            flux qui va ï¿½tre fermï¿½
 	 */
 	public void close(Object stream) {
 		if (stream == null) {
